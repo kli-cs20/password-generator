@@ -3,33 +3,40 @@
 // HTML Elements
 let lowerCheckbox = document.getElementById("lowercase");
 let upperCheckbox = document.getElementById("uppercase");
-let numCheckbox = document.getElementById("numbers")
+let numCheckbox = document.getElementById("numbers");
+let specialCharCheckbox = document.getElementById("special");
 let submitBtn = document.getElementById("submitBtn");
 let password = document.getElementById("result");
 
 // Global Variables
-let characters = [];
+let characterTypes = [];
 
 document.addEventListener("change", setParameters);
 submitBtn.addEventListener("click", generatePwd);
 
 function setParameters() {
-    characters = [];
+    characterTypes = [];
     if (lowerCheckbox.checked) {
-        characters.concat(lowercase);
+        characterTypes.push(lowercase);
     }
     if (upperCheckbox.checked) {
-        characters.concat(uppercase);
+        characterTypes.push(uppercase);
     }
     if (numCheckbox.checked) {
-        characters.concat(numbers);
+        characterTypes.push(numbers);
+    }
+    if (specialCharCheckbox.checked) {
+        characterTypes.push(specialChars);
     }
 }
 
 function generatePwd() {
-    console.log(randLowercase());
-    console.log(randUppercase());
-    console.log(randNumber());
+    let str = "";
+    for (let n = 0; n < 10; n++) {
+        let x = randomInt(0, characterTypes.length);
+        str += characterTypes[x][randomInt(0, characterTypes[x].length)];
+    }
+    password.innerHTML = str;
 }
 
 // Arrays
@@ -37,6 +44,7 @@ function generatePwd() {
 let lowercase = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
 let uppercase = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
 let numbers = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
+let specialChars = ["!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "-", "_", "+", "=", "?", "<", ">", ",", ".", "/", "~"];
 
 // Helper Functions
 // Return a random decimal between low (inclusive) and high (exclusive)
@@ -47,16 +55,4 @@ function randomDec(low, high) {
 // Random Integer: low (inclusive) to high (exclusive)
 function randomInt(low, high) {
     return Math.floor(randomDec(low, high))
-}
-
-function randLowercase() {
-    return lowercase[randomInt(0, 27)];
-}
-
-function randUppercase() {
-    return uppercase[randomInt(0, 27)];
-}
-
-function randNumber() {
-    return numbers[randomInt(0, 10)];
 }
