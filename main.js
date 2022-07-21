@@ -1,6 +1,7 @@
 // Password Generator
 
 // HTML Elements
+let numCharacters = document.getElementById("numCharacters");
 let lowerCheckbox = document.getElementById("lowercase");
 let upperCheckbox = document.getElementById("uppercase");
 let numCheckbox = document.getElementById("numbers");
@@ -32,7 +33,8 @@ function setParameters() {
 
 function generatePwd() {
     let str = "";
-    for (let n = 0; n < 10; n++) {
+    let num = +numCharacters.value;
+    for (let n = 0; n < num; n++) {
         let x = randomInt(0, characterTypes.length);
         str += characterTypes[x][randomInt(0, characterTypes[x].length)];
     }
